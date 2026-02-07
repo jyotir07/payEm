@@ -1,0 +1,10 @@
+# Ruby dependencies for webhook-service. Defines gems for HTTP server,
+# payload signing, retry/backoff, and dead-letter handling.
+# Responsibility: Dependency management for the webhook service.
+
+source 'https://rubygems.org'
+ruby '>= 3.2'
+
+gem 'sinatra', '~> 3.0'
+# gem 'redis'
+# gem 'sidekiq'

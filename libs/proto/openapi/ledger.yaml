@@ -1,0 +1,10 @@
+# OpenAPI placeholder for ledger API. Defines endpoints and schemas
+# for accounts and ledger entries. Responsibility: Contract for ledger-service and gateway.
+
+openapi: 3.0.0
+info:
+  title: Ledger API
+  version: 1.0.0
+paths: {}
+components:
+  schemas: {}

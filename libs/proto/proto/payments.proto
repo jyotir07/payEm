@@ -1,0 +1,9 @@
+// Protobuf placeholder for payments. Message and service definitions
+// for payment intents if gRPC is used. Responsibility: Contract for payments-core and clients.
+
+syntax = "proto3";
+package paymentsplatform.payments;
+
+option go_package = "github.com/payments-platform/proto/payments";
+
+message PaymentIntent {}

@@ -1,0 +1,34 @@
+# Build and runtime
+/target
+/build
+/dist
+*.jar
+*.class
+node_modules
+.next
+.vercel
+
+# Dependencies
+vendor/bundle
+.bundle
+
+# IDE and OS
+.idea
+.vscode
+*.swp
+.DS_Store
+Thumbs.db
+
+# Env and secrets
+.env
+.env.local
+*.pem
+
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+
+# Logs and caches
+*.log
+.cache

@@ -1,0 +1,12 @@
+{
+  "name": "admin-dashboard",
+  "version": "1.0.0",
+  "description": "Admin dashboard for payment lifecycle, webhook delivery status, and ledger summaries.",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint src",
+    "test": "vitest run"
+  }
+}

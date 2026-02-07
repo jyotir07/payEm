@@ -1,0 +1,34 @@
+// Build configuration for payments-core. Defines Java version, dependencies,
+// and tasks for compilation, tests, and packaging. Responsibility: Language-specific build.
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.payments-platform'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Application and HTTP
+    // implementation '...'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+application {
+    mainClass = 'com.paymentsplatform.paymentscore.Application'
+}
+
+test {
+    useJUnitPlatform()
+}

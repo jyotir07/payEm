@@ -1,0 +1,22 @@
+# Kubernetes Deployment for payments-core. Defines replicas, image, env, health checks.
+# Responsibility: Runtime definition for payments-core.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-core
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payments-core
+  template:
+    metadata:
+      labels:
+        app: payments-core
+    spec:
+      containers:
+        - name: payments-core
+          image: payments-platform/payments-core:latest
+          ports:
+            - containerPort: 8081

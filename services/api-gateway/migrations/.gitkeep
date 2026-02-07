@@ -1,0 +1,2 @@
+# Placeholder for database schema migrations. api-gateway may use
+# migrations for rate-limit or API-key storage if persisted.

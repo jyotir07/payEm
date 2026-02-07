@@ -1,0 +1,2 @@
+# Database schema migrations for ledger-service. Versioned DDL for
+# accounts, ledger_entries, and balance snapshots (if materialized).

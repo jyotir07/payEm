@@ -1,0 +1,15 @@
+# Gemfile.lock placeholder. Populated by bundle install.
+# Responsibility: Lock gem versions for reproducible builds.
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  sinatra (~> 3.0)
+
+BUNDLED WITH
+  2.4.0

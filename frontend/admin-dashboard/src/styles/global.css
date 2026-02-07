@@ -1,0 +1,7 @@
+/* Global styling for admin-dashboard. Base reset, typography, and
+   theme variables. Responsibility: Shared styles and design tokens. */
+
+:root {
+  --color-bg: #fff;
+  --color-text: #111;
+}

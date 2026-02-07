@@ -1,0 +1,4 @@
+// Gradle settings for payments-core. Defines root project name.
+// Responsibility: Project identification for the build.
+
+rootProject.name = 'payments-core'

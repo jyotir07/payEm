@@ -1,0 +1,77 @@
+# Local development orchestration for payments-platform.
+# Starts API Gateway, Payments Core, Ledger Service, Webhook Service,
+# and supporting infrastructure (DB, message broker, etc.).
+# Use: docker-compose up -d
+
+version: "3.9"
+
+services:
+  api-gateway:
+    build: ./services/api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PAYMENTS_CORE_URL=http://payments-core:8081
+      - LEDGER_SERVICE_URL=http://ledger-service:8082
+      - WEBHOOK_SERVICE_URL=http://webhook-service:9292
+    depends_on:
+      - payments-core
+      - ledger-service
+      - webhook-service
+
+  payments-core:
+    build: ./services/payments-core
+    ports:
+      - "8081:8081"
+    environment:
+      - LEDGER_SERVICE_URL=http://ledger-service:8082
+      - MESSAGE_BROKER_URL=amqp://rabbitmq:5672
+    depends_on:
+      - ledger-service
+      - rabbitmq
+
+  ledger-service:
+    build: ./services/ledger-service
+    ports:
+      - "8082:8082"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    depends_on:
+      - postgres
+
+  webhook-service:
+    build: ./services/webhook-service
+    ports:
+      - "9292:9292"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MESSAGE_BROKER_URL=amqp://rabbitmq:5672
+    depends_on:
+      - redis
+      - rabbitmq
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: payments
+      POSTGRES_PASSWORD: payments
+      POSTGRES_DB: payments_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  postgres_data:
