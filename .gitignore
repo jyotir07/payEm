@@ -32,3 +32,5 @@ Thumbs.db
 # Logs and caches
 *.log
 .cache
+
+.github/workflows/ci.yml
