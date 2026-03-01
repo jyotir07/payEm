@@ -34,3 +34,4 @@ Thumbs.db
 .cache
 
 .github/workflows/ci.yml
+\.github\workflows\ci.yml
