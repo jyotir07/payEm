@@ -35,3 +35,6 @@ Thumbs.db
 
 .github/workflows/ci.yml
 \.github\workflows\ci.yml
+
+PROJECT.md
+CLAUDE.md
