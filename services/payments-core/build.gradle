@@ -19,10 +19,12 @@ repositories {
 }
 
 dependencies {
-    // Application and HTTP
-    // implementation '...'
+    // Application and HTTP (added per phase — nothing needed for domain-only Phase 1)
+
+    // Testing
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 application {

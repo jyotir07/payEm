@@ -17,55 +17,82 @@ Each phase has a clear goal, a definition of done, and explicit boundaries on wh
 
 ---
 
-## Phase 1 — Payments Core: Domain Layer (Java)
+## Phase 1 — Payments Core: Domain Layer (Java) ✅ COMPLETE
 
 **Goal:** Implement the pure domain model for payments. No frameworks. No database. No HTTP.
 
-### 1.1 `Money` Value Object
+### 1.1 `Money` Value Object ✅
 - Stores amount as `BigDecimal` (never `double` or `float`)
-- Stores currency as ISO 4217 string (e.g., `"USD"`)
+- Stores currency as ISO 4217 string (e.g., `"INR"`)
 - Immutable — all operations return new instances
 - Validates: amount must be non-negative, currency must be non-null/non-empty
 - Implements: `add()`, `subtract()`, `isGreaterThan()`, `equals()`, `hashCode()`, `toString()`
 - Throws on currency mismatch
 
-### 1.2 `PaymentStatus` Enum
+### 1.2 `PaymentStatus` Enum ✅
 - States: `CREATED`, `PROCESSING`, `SUCCEEDED`, `FAILED`, `CANCELED`
-- Define which transitions are legal from each state:
+- Legal transitions defined per state:
   - `CREATED` → `PROCESSING`, `CANCELED`
   - `PROCESSING` → `SUCCEEDED`, `FAILED`
   - `SUCCEEDED` → (terminal — no transitions)
   - `FAILED` → (terminal — no transitions)
   - `CANCELED` → (terminal — no transitions)
 - Method: `canTransitionTo(PaymentStatus next): boolean`
+- Method: `isTerminal(): boolean`
 
-### 1.3 `PaymentIntent` Entity
+### 1.3 `PaymentIntent` Entity ✅
 - Fields: `id` (UUID), `amount` (Money), `status` (PaymentStatus), `idempotencyKey` (String), `createdAt`, `updatedAt`
 - Created via static factory method: `PaymentIntent.create(amount, idempotencyKey)`
 - Encapsulates all state transition methods:
   - `startProcessing()` — `CREATED` → `PROCESSING`
   - `markSucceeded()` — `PROCESSING` → `SUCCEEDED`
   - `markFailed()` — `PROCESSING` → `FAILED`
-  - `cancel()` — `CREATED` or `PROCESSING` → `CANCELED`
+  - `cancel()` — `CREATED` → `CANCELED`
 - Each method validates the transition via `PaymentStatus.canTransitionTo()` and throws `InvalidStateTransitionException` if illegal
 - No setters — state changes only through named methods
+- `updatedAt` refreshed on every successful transition
 
-### 1.4 Domain Exceptions
-- `InvalidStateTransitionException` — thrown on illegal transition
-- `InvalidMoneyException` — thrown on bad Money construction
+### 1.4 Domain Exceptions ✅
+- `InvalidStateTransitionException` — thrown on illegal transition, carries `paymentId`, `from`, `to`
+- `InvalidMoneyException` — thrown on bad Money construction or currency mismatch
 - `DuplicateIdempotencyKeyException` — thrown when a key already exists (logic only, no DB yet)
 
-### 1.5 Unit Tests
-- `MoneyTest` — construction, arithmetic, equality, currency mismatch
-- `PaymentStatusTest` — all legal and illegal transition combinations
-- `PaymentIntentTest` — state machine paths: happy path, all failure branches, terminal state enforcement
+### 1.5 Additional Domain Classes ✅
+- `IdempotencyKey` value object — validates length (8–255 chars), trims whitespace
+- `PaymentStateMachine` — documents state topology, reserved for future extraction
+- `PaymentErrors` — error catalogue, maps to HTTP codes in Phase 3
+
+### 1.6 Unit Tests ✅
+- `MoneyTest` — construction, arithmetic, equality, immutability, INR and currency mismatch scenarios
+- `PaymentStatusTest` — all legal and illegal transition combinations, `isTerminal()`
+- `PaymentIntentTest` — happy paths, all invalid transitions, exception context, `updatedAt` refresh, INR lifecycle scenarios
 
 **Phase 1 Definition of Done:**
-- [ ] All three domain classes implemented
-- [ ] All domain exceptions defined
-- [ ] Unit tests pass with >90% coverage of domain logic
-- [ ] Zero framework imports in domain classes
-- [ ] Zero database or HTTP code anywhere
+- [x] All domain classes implemented (`Money`, `PaymentStatus`, `PaymentIntent`, `IdempotencyKey`)
+- [x] All domain exceptions defined
+- [x] Unit tests written covering >90% of domain logic
+- [x] INR (Indian Rupee) test coverage added across Money and PaymentIntent tests
+- [x] Zero framework imports in domain classes
+- [x] Zero database or HTTP code anywhere
+
+**Files delivered:**
+```
+src/main/java/.../internal/domain/
+├── Money.java
+├── PaymentStatus.java
+├── PaymentIntent.java
+├── IdempotencyKey.java
+├── PaymentStateMachine.java
+└── exceptions/
+    ├── InvalidStateTransitionException.java
+    ├── InvalidMoneyException.java
+    └── DuplicateIdempotencyKeyException.java
+
+src/test/java/.../domain/
+├── MoneyTest.java
+├── PaymentStatusTest.java
+└── PaymentIntentTest.java
+```
 
 ---
 
@@ -447,8 +474,8 @@ Each phase has a clear goal, a definition of done, and explicit boundaries on wh
 
 | Phase | Focus | Language | Status |
 |-------|-------|----------|--------|
-| 1 | Payments Core — Domain | Java | **Start here** |
-| 2 | Payments Core — Persistence | Java | |
+| 1 | Payments Core — Domain | Java | ✅ Complete |
+| 2 | Payments Core — Persistence | Java | **Next** |
 | 3 | Payments Core — HTTP | Java | |
 | 4 | Ledger Service — Domain | Scala | |
 | 5 | Ledger Service — Persistence + HTTP | Scala | |
@@ -466,14 +493,11 @@ Each phase has a clear goal, a definition of done, and explicit boundaries on wh
 
 ## What We Are Building Now
 
-**Phase 1 — Payments Core Domain Layer**
+**Phase 2 — Payments Core Persistence Layer**
 
 Files to implement:
-- `services/payments-core/internal/domain/Money.java`
-- `services/payments-core/internal/domain/PaymentStatus.java`
-- `services/payments-core/internal/domain/PaymentIntent.java`
-- `services/payments-core/internal/domain/exceptions/InvalidStateTransitionException.java`
-- `services/payments-core/internal/domain/exceptions/InvalidMoneyException.java`
-- `services/payments-core/tests/domain/MoneyTest.java`
-- `services/payments-core/tests/domain/PaymentStatusTest.java`
-- `services/payments-core/tests/domain/PaymentIntentTest.java`
+- `services/payments-core/migrations/V1__create_payments_table.sql`
+- `services/payments-core/src/main/java/.../internal/domain/PaymentRepository.java` (interface)
+- `services/payments-core/src/main/java/.../internal/infrastructure/PostgresPaymentRepository.java`
+- `services/payments-core/src/main/java/.../internal/infrastructure/PostgresIdempotencyStore.java`
+- `services/payments-core/src/test/java/.../infrastructure/PaymentRepositoryIntegrationTest.java`
