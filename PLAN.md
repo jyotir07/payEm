@@ -96,7 +96,7 @@ src/test/java/.../domain/
 
 ---
 
-## Phase 2 — Payments Core: Persistence Layer (Java)
+## Phase 2 — Payments Core: Persistence Layer (Java) ✅ COMPLETE
 
 **Goal:** Add the repository and idempotency store. Domain must not change.
 
@@ -131,12 +131,30 @@ src/test/java/.../domain/
 - Test round-trip: save → find by ID → find by idempotency key
 
 **Phase 2 Definition of Done:**
-- [ ] Migration files in place and tested
-- [ ] Repository interface defined in domain
-- [ ] Repository implementation in infrastructure (not domain)
-- [ ] Idempotency store implemented
-- [ ] Integration tests pass against a real database
-- [ ] `PaymentIntent` entity has zero ORM annotations
+- [x] Migration files in place and tested
+- [x] Repository interface defined in domain
+- [x] Repository implementation in infrastructure (not domain)
+- [x] Idempotency store implemented
+- [x] Integration tests pass against a real database
+- [x] `PaymentIntent` entity has zero ORM annotations
+
+**Files delivered:**
+```
+services/payments-core/migrations/
+└── V1__create_payments_table.sql
+
+src/main/java/.../internal/domain/
+├── PaymentRepository.java          (interface)
+├── IdempotencyStore.java           (interface)
+└── PaymentIntent.java              (added reconstitute() factory)
+
+src/main/java/.../internal/infrastructure/
+├── PostgresPaymentRepository.java  (JDBC upsert, manual row mapping)
+└── PostgresIdempotencyStore.java   (backed by payments table)
+
+src/test/java/.../infrastructure/
+└── PaymentRepositoryIntegrationTest.java
+```
 
 ---
 
@@ -475,8 +493,8 @@ src/test/java/.../domain/
 | Phase | Focus | Language | Status |
 |-------|-------|----------|--------|
 | 1 | Payments Core — Domain | Java | ✅ Complete |
-| 2 | Payments Core — Persistence | Java | **Next** |
-| 3 | Payments Core — HTTP | Java | |
+| 2 | Payments Core — Persistence | Java | ✅ Complete |
+| 3 | Payments Core — HTTP | Java | **Next** |
 | 4 | Ledger Service — Domain | Scala | |
 | 5 | Ledger Service — Persistence + HTTP | Scala | |
 | 6 | Event Integration (RabbitMQ) | Java + Scala | |
@@ -493,11 +511,13 @@ src/test/java/.../domain/
 
 ## What We Are Building Now
 
-**Phase 2 — Payments Core Persistence Layer**
+**Phase 3 — Payments Core: Application + HTTP Layer**
 
 Files to implement:
-- `services/payments-core/migrations/V1__create_payments_table.sql`
-- `services/payments-core/src/main/java/.../internal/domain/PaymentRepository.java` (interface)
-- `services/payments-core/src/main/java/.../internal/infrastructure/PostgresPaymentRepository.java`
-- `services/payments-core/src/main/java/.../internal/infrastructure/PostgresIdempotencyStore.java`
-- `services/payments-core/src/test/java/.../infrastructure/PaymentRepositoryIntegrationTest.java`
+- `services/payments-core/src/main/java/.../internal/application/CreatePaymentUseCase.java`
+- `services/payments-core/src/main/java/.../internal/application/ProcessPaymentUseCase.java`
+- `services/payments-core/src/main/java/.../internal/application/ConfirmPaymentUseCase.java`
+- `services/payments-core/src/main/java/.../internal/application/CancelPaymentUseCase.java`
+- `services/payments-core/src/main/java/.../internal/transport/PaymentController.java`
+- `services/payments-core/src/main/java/.../internal/transport/dto/` (request/response DTOs)
+- `services/payments-core/src/main/java/.../internal/transport/ErrorHandler.java`

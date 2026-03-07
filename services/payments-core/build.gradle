@@ -19,12 +19,28 @@ repositories {
 }
 
 dependencies {
-    // Application and HTTP (added per phase — nothing needed for domain-only Phase 1)
+    // Phase 2: PostgreSQL JDBC driver and connection pool
+    implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'com.zaxxer:HikariCP:5.1.0'
 
     // Testing
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Phase 2: Testcontainers for integration tests
+    testImplementation platform('org.testcontainers:testcontainers-bom:1.19.8')
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:junit-jupiter'
+}
+
+// Expose the migrations directory as a classpath resource for integration tests.
+sourceSets {
+    main {
+        resources {
+            srcDirs += ['migrations']
+        }
+    }
 }
 
 application {

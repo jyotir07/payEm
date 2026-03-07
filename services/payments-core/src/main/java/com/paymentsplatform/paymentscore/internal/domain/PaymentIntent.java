@@ -47,6 +47,22 @@ public final class PaymentIntent {
     }
 
     /**
+     * Reconstitutes a PaymentIntent from persisted data.
+     *
+     * Reserved for the persistence layer only. Bypasses creation-time logic (ID generation,
+     * timestamp initialisation) and restores all fields exactly as stored.
+     */
+    public static PaymentIntent reconstitute(
+            UUID id,
+            Money amount,
+            String idempotencyKey,
+            PaymentStatus status,
+            Instant createdAt,
+            Instant updatedAt) {
+        return new PaymentIntent(id, amount, idempotencyKey, status, createdAt, updatedAt);
+    }
+
+    /**
      * Creates a new PaymentIntent in the CREATED state.
      *
      * @param amount         the monetary amount — must not be null
