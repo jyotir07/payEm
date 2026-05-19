@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.paymentsplatform.paymentscore.domain.MoneyTest" tests="40" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:22:06.403Z" hostname="JYOTIRS" time="0.164">
+  <properties/>
+  <testcase name="toStringContainsCurrencyAndAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="createsInrWithPaiseAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="createsMoneyWithValidBigDecimalAndCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="isGreaterThanReturnsTrueWhenLarger()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="allowsZeroAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="throwsOnNullCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.006"/>
+  <testcase name="throwsOnInvalidStringAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.004"/>
+  <testcase name="throwsWhenAddingInrAndUsd()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="addDoesNotMutateEitherOperand()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="throwsOnAddWithDifferentCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="throwsOnSubtractThatWouldProduceNegativeResult()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.005"/>
+  <testcase name="throwsOnNullStringAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="throwsOnSubtractWithDifferentCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="inrIsGreaterThanSmallerInrAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="throwsOnNullBigDecimalAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="inrToStringContainsInrAndAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="throwsWhenComparingInrWithUsd()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="isGreaterThanThrowsOnCurrencyMismatch()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="inrAndUsdAreNotEqual()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="isGreaterThanReturnsFalseWhenSmaller()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="inrLowercaseCodeIsNormalized()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="subtractDoesNotMutateEitherOperand()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="normalizesCurrencyToUppercase()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="addZeroReturnsEquivalentValue()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="addsTwoMoneyValuesOfSameCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="subtractsTwoMoneyValuesOfSameCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="throwsWhenSubtractingUsdFromInr()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.004"/>
+  <testcase name="instancesWithDifferentCurrenciesAreNotEqual()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="subtractsInrAmounts()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="createsInrWithWholeRupeeAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="isGreaterThanReturnsFalseWhenEqual()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="subtractSameValueProducesZero()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="throwsOnNegativeAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.004"/>
+  <testcase name="throwsOnTwoLetterCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="createsFromStringAmount()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="addsInrAmounts()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.004"/>
+  <testcase name="twoInstancesWithSameValueAndCurrencyAreEqual()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.002"/>
+  <testcase name="instancesWithDifferentAmountsAreNotEqual()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.001"/>
+  <testcase name="throwsOnFourLetterCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <testcase name="throwsOnBlankCurrency()" classname="com.paymentsplatform.paymentscore.domain.MoneyTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

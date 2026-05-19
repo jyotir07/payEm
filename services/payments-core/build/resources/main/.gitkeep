@@ -1,0 +1,2 @@
+# Database schema migrations for payments-core. Versioned DDL for
+# payment_intents, idempotency_keys, and related tables.

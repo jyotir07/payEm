@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:22:06.764Z" hostname="JYOTIRS" time="0.05">
+  <properties/>
+  <testcase name="succeededIsTerminal()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="processingCanTransitionToFailed()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="failedIsTerminalAndBlocksAllTransitions()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.002"/>
+  <testcase name="createdCannotTransitionToFailed()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="createdCanTransitionToProcessing()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="canceledIsTerminalAndBlocksAllTransitions()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="processingIsNotTerminal()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="createdIsNotTerminal()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="createdCannotTransitionToSucceeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="createdCannotTransitionToSelf()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="succeededIsTerminalAndBlocksAllTransitions()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.002"/>
+  <testcase name="canceledIsTerminal()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="processingCanTransitionToSucceeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.002"/>
+  <testcase name="processingCannotTransitionToSelf()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="processingCannotTransitionToCanceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="failedIsTerminal()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="createdCanTransitionToCanceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <testcase name="processingCannotTransitionToCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentStatusTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

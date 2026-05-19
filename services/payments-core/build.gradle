@@ -55,4 +55,7 @@ application {
 
 test {
     useJUnitPlatform()
+    // Pin the JVM timezone so Postgres doesn't reject deprecated zone names
+    // like "Asia/Calcutta" picked up from the host (Windows "India Standard Time").
+    systemProperty 'user.timezone', 'UTC'
 }
