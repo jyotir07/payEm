@@ -158,47 +158,100 @@ src/test/java/.../infrastructure/
 
 ---
 
-## Phase 3 — Payments Core: Application + HTTP Layer (Java)
+## Phase 3 — Payments Core: Application + HTTP Layer (Java) ✅ COMPLETE
 
 **Goal:** Wire domain and persistence together through use cases. Expose HTTP endpoints.
 
-### 3.1 Use Cases (Application Layer)
-- `CreatePaymentUseCase`
+### 3.1 Use Cases (Application Layer) ✅
+- `CreatePaymentUseCase` ✅
   - Receives: amount, currency, idempotency key
-  - Checks idempotency store first — if key exists, return existing intent
-  - Creates `PaymentIntent.create(...)`, saves it, returns it
-- `ProcessPaymentUseCase`
-  - Loads intent by ID, calls `startProcessing()`, saves, emits event
-- `ConfirmPaymentUseCase`
-  - Marks payment as succeeded or failed based on result
-- `CancelPaymentUseCase`
-  - Loads intent, calls `cancel()`, saves
+  - Checks idempotency store first — if key exists, returns existing intent
+  - Otherwise creates `PaymentIntent.create(...)`, saves it, returns it
+  - Returns a `Result` carrying the intent plus an `isNew()` flag so the transport
+    layer can pick 201 (created) vs 200 (idempotent replay)
+- `ProcessPaymentUseCase` ✅ — loads by ID, calls `startProcessing()`, saves
+  (event emission deferred to Phase 6)
+- `ConfirmPaymentUseCase` ✅ — single `execute(id, Outcome)` where `Outcome` is
+  `SUCCEEDED` or `FAILED`; calls `markSucceeded()` / `markFailed()` and saves
+- `CancelPaymentUseCase` ✅ — loads, calls `cancel()`, saves
+- `GetPaymentUseCase` ✅ — added so transport never references the repository
+  directly, even for read paths
 
-### 3.2 HTTP Handlers (Transport Layer)
-- `POST /payments` — create payment intent
-- `GET /payments/{id}` — get payment intent by ID
-- `POST /payments/{id}/process` — start processing
-- `POST /payments/{id}/cancel` — cancel
-- All handlers: validate input → call use case → map result to HTTP response
-- Use standard HTTP status codes: 200, 201, 400, 404, 409 (conflict on duplicate key), 422
+### 3.2 HTTP Handlers (Transport Layer) ✅
+HTTP server: **Javalin 6.3** + Jackson 2.17 (JSR-310 enabled for `Instant`).
+- `POST /payments` — create payment intent. Idempotency key carried in the
+  `Idempotency-Key` request header (Stripe convention)
+- `GET /payments/{id}` — fetch payment intent by ID
+- `POST /payments/{id}/process` — `CREATED → PROCESSING`
+- `POST /payments/{id}/confirm` — body `{"outcome": "succeeded"|"failed"}`
+- `POST /payments/{id}/cancel` — cancel from `CREATED`
+- All handlers: parse path/header/body → call use case → map result to response.
+  Zero business logic in handlers.
 
-### 3.3 Request/Response DTOs
-- Separate from domain objects — never expose domain internals directly
-- Validation on input DTOs (required fields, format)
+### 3.3 Request/Response DTOs ✅
+- `CreatePaymentRequest(BigDecimal amount, String currency)`
+- `ConfirmPaymentRequest(String outcome)`
+- `PaymentResponse(id, status, amount, currency, idempotencyKey, createdAt, updatedAt)`
+  — built via `PaymentResponse.from(PaymentIntent)`; domain entity is never serialised directly
+- `ErrorResponse(code, message)` — uniform error envelope with a stable
+  machine-readable `code`
 
-### 3.4 Error Handling
-- Map domain exceptions to HTTP responses:
-  - `InvalidStateTransitionException` → 422
-  - `DuplicateIdempotencyKeyException` → 200 (return existing)
-  - Not found → 404
+### 3.4 Error Handling ✅
+Centralised in `transport/ErrorHandler.java`:
+- `PaymentNotFoundException` → **404** `not_found`
+- `InvalidStateTransitionException` → **422** `invalid_state_transition`
+- `InvalidMoneyException` → **400** `invalid_money`
+- `DuplicateIdempotencyKeyException` → **409** `duplicate_idempotency_key`
+  (defensive — the use case prefers returning the existing intent with 200)
+- `InvalidPathParameterException` → **400** `invalid_path_parameter`
+- `IllegalArgumentException` → **400** `invalid_request`
+- Any other `Exception` → **500** `internal_error`
+- Missing `Idempotency-Key` header → **400** `missing_idempotency_key`
+- Unknown confirm outcome → **400** `invalid_outcome`
 
 **Phase 3 Definition of Done:**
-- [ ] All four use cases implemented
-- [ ] HTTP handlers implemented, referencing only use cases
-- [ ] DTOs separate from domain objects
-- [ ] Error mapping complete
-- [ ] Postman or curl test: full create → process → succeed flow works end to end
-- [ ] No business logic in handlers
+- [x] All four use cases implemented (plus `GetPaymentUseCase` for read paths)
+- [x] HTTP handlers implemented, referencing only use cases
+- [x] DTOs separate from domain objects
+- [x] Error mapping complete
+- [x] Integration test exercises full create → process → confirm flow plus all error paths against a real Postgres (12 scenarios, Testcontainers)
+- [x] No business logic in handlers
+
+**Files delivered:**
+```
+services/payments-core/src/main/java/.../
+├── Application.java                       (Javalin bootstrap + DI wiring)
+├── internal/application/
+│   ├── CreatePaymentUseCase.java          (with nested Result type)
+│   ├── GetPaymentUseCase.java
+│   ├── ProcessPaymentUseCase.java
+│   ├── ConfirmPaymentUseCase.java         (with nested Outcome enum)
+│   └── CancelPaymentUseCase.java
+├── internal/transport/
+│   ├── PaymentController.java
+│   ├── ErrorHandler.java
+│   └── dto/
+│       ├── CreatePaymentRequest.java
+│       ├── ConfirmPaymentRequest.java
+│       ├── PaymentResponse.java
+│       └── ErrorResponse.java
+└── internal/domain/exceptions/
+    └── PaymentNotFoundException.java      (new — signals 404)
+
+services/payments-core/src/test/java/.../
+├── application/                           (18 unit tests + in-memory fakes)
+└── transport/PaymentControllerIntegrationTest.java   (12 HTTP scenarios)
+```
+
+**Vestigial stubs removed:** `internal/api/PaymentHandler.java` (moved to
+`transport/PaymentController.java`) and `internal/persistence/` package
+(interfaces always lived in `domain/`).
+
+**Build:** added Javalin, Jackson, slf4j-simple; pinned test JVM
+`user.timezone=UTC` so Windows "Asia/Calcutta" doesn't break Postgres 16.
+
+**Test suite:** 126 tests pass (40 Money, 30 PaymentIntent, 18 PaymentStatus,
+18 use-case unit, 8 repository integration, 12 controller integration).
 
 ---
 
@@ -494,8 +547,8 @@ src/test/java/.../infrastructure/
 |-------|-------|----------|--------|
 | 1 | Payments Core — Domain | Java | ✅ Complete |
 | 2 | Payments Core — Persistence | Java | ✅ Complete |
-| 3 | Payments Core — HTTP | Java | **Next** |
-| 4 | Ledger Service — Domain | Scala | |
+| 3 | Payments Core — HTTP | Java | ✅ Complete |
+| 4 | Ledger Service — Domain | Scala | **Next** |
 | 5 | Ledger Service — Persistence + HTTP | Scala | |
 | 6 | Event Integration (RabbitMQ) | Java + Scala | |
 | 7 | Webhook Service | Ruby | |
@@ -511,13 +564,22 @@ src/test/java/.../infrastructure/
 
 ## What We Are Building Now
 
-**Phase 3 — Payments Core: Application + HTTP Layer**
+**Phase 4 — Ledger Service: Domain Layer (Scala)**
 
-Files to implement:
-- `services/payments-core/src/main/java/.../internal/application/CreatePaymentUseCase.java`
-- `services/payments-core/src/main/java/.../internal/application/ProcessPaymentUseCase.java`
-- `services/payments-core/src/main/java/.../internal/application/ConfirmPaymentUseCase.java`
-- `services/payments-core/src/main/java/.../internal/application/CancelPaymentUseCase.java`
-- `services/payments-core/src/main/java/.../internal/transport/PaymentController.java`
-- `services/payments-core/src/main/java/.../internal/transport/dto/` (request/response DTOs)
-- `services/payments-core/src/main/java/.../internal/transport/ErrorHandler.java`
+Pure domain — double-entry accounting logic. No frameworks. No database.
+
+Files to implement (under `services/ledger-service/`):
+- `src/main/scala/.../domain/Money.scala` (case class, BigDecimal + ISO currency)
+- `src/main/scala/.../domain/EntryType.scala` (`DEBIT`, `CREDIT`)
+- `src/main/scala/.../domain/LedgerEntry.scala` (immutable case class)
+- `src/main/scala/.../domain/Account.scala` (entries List + derived `balance()`)
+- `src/main/scala/.../domain/DoubleEntryValidator.scala`
+- `src/main/scala/.../domain/exceptions/InvariantViolationException.scala`
+- `src/main/scala/.../domain/exceptions/ImmutableEntryException.scala`
+- ScalaTest specs: `MoneySpec`, `LedgerEntrySpec`, `AccountSpec`, `DoubleEntryValidatorSpec`
+
+Hard constraints (carried over from CLAUDE.md):
+- Balance is always **derived** from entries, never stored
+- Ledger entries are immutable — append-only, no update/delete
+- Double-entry invariant: sum of debits = sum of credits per transaction
+- Zero framework imports in domain code
