@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:21:46.168Z" hostname="JYOTIRS" time="11.677">
+  <properties/>
+  <testcase name="save_updatesStatusOnTransition()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.219"/>
+  <testcase name="findByIdempotencyKey_returnsEmpty_forUnknownKey()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.015"/>
+  <testcase name="idempotencyStore_existsReturnsFalse_beforeSave()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.009"/>
+  <testcase name="saveAndFindById_roundTrip()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.016"/>
+  <testcase name="saveAndFindByIdempotencyKey_roundTrip()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.012"/>
+  <testcase name="findById_returnsEmpty_forUnknownId()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.009"/>
+  <testcase name="save_persists_fullLifecycle_INR()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.034"/>
+  <testcase name="idempotencyStore_existsReturnsTrue_afterRepositorySave()" classname="com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO org.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
+[Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+[Test worker] INFO org.testcontainers.DockerClientFactory - Docker host IP address is localhost
+[Test worker] INFO org.testcontainers.DockerClientFactory - Connected to docker: 
+  Server Version: 28.0.4
+  API Version: 1.48
+  Operating System: Docker Desktop
+  Total Memory: 3724 MB
+[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Creating container for image: testcontainers/ryuk:0.7.0
+[Test worker] INFO org.testcontainers.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Container testcontainers/ryuk:0.7.0 is starting: 62a00fd189421b0062c8916c362cb81070fec52a689e45dbcd54d3daeaa6e934
+[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Container testcontainers/ryuk:0.7.0 started in PT3.4089392S
+[Test worker] INFO org.testcontainers.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+[Test worker] INFO org.testcontainers.DockerClientFactory - Checking the system...
+[Test worker] INFO org.testcontainers.DockerClientFactory - ?? Docker server version should be at least 1.6.0
+[Test worker] INFO tc.postgres:16 - Creating container for image: postgres:16
+[Test worker] INFO tc.postgres:16 - Container postgres:16 is starting: 6a229e2fa0ab0c5a112dabed4f47f1c24039fe29f3b6712475aaeeeaa69d1b3d
+[Test worker] INFO tc.postgres:16 - Container postgres:16 started in PT4.6179912S
+[Test worker] INFO tc.postgres:16 - Container is started (JDBC URL: jdbc:postgresql://localhost:63445/payments_test?loggerLevel=OFF)
+[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[Test worker] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e84111a
+[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+]]></system-err>
+</testsuite>

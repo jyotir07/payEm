@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.paymentsplatform.paymentscore.application.GetPaymentUseCaseTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:22:06.364Z" hostname="JYOTIRS" time="0.009">
+  <properties/>
+  <testcase name="get_missing_throwsNotFound()" classname="com.paymentsplatform.paymentscore.application.GetPaymentUseCaseTest" time="0.002"/>
+  <testcase name="get_returnsPersistedIntent()" classname="com.paymentsplatform.paymentscore.application.GetPaymentUseCaseTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
