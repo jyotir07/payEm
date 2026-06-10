@@ -7,6 +7,7 @@ import com.paymentsplatform.paymentscore.internal.domain.PaymentIntent;
 import com.paymentsplatform.paymentscore.internal.domain.PaymentStatus;
 import com.paymentsplatform.paymentscore.internal.domain.exceptions.InvalidStateTransitionException;
 import com.paymentsplatform.paymentscore.internal.domain.exceptions.PaymentNotFoundException;
+import com.paymentsplatform.paymentscore.internal.infrastructure.NoopPaymentEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +26,8 @@ class ConfirmPaymentUseCaseTest {
     @BeforeEach
     void setUp() {
         repo = new InMemoryPaymentRepository();
-        process = new ProcessPaymentUseCase(repo);
-        confirm = new ConfirmPaymentUseCase(repo);
+        process = new ProcessPaymentUseCase(repo, new NoopPaymentEventPublisher());
+        confirm = new ConfirmPaymentUseCase(repo, new NoopPaymentEventPublisher());
     }
 
     @Test

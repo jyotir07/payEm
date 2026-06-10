@@ -17,11 +17,17 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module"   %% "jackson-module-scala" % "2.17.2",
   "org.slf4j"             %  "slf4j-simple"                  % "2.0.13",
 
+  // Phase 6: RabbitMQ client for consuming payment events
+  "com.rabbitmq"          %  "amqp-client"                   % "5.21.0",
+
   // Phase 4: tests
   "org.scalatest"         %% "scalatest"                     % "3.2.18"   % Test,
 
   // Phase 5: Testcontainers Postgres for integration tests
-  "org.testcontainers"    %  "postgresql"                    % "1.19.8"   % Test
+  "org.testcontainers"    %  "postgresql"                    % "1.19.8"   % Test,
+
+  // Phase 6: Testcontainers RabbitMQ for consumer integration test
+  "org.testcontainers"    %  "rabbitmq"                      % "1.19.8"   % Test
 )
 
 // Expose migrations on the test classpath so integration tests can apply them.

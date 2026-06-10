@@ -7,6 +7,7 @@ import com.paymentsplatform.paymentscore.internal.domain.PaymentIntent;
 import com.paymentsplatform.paymentscore.internal.domain.PaymentStatus;
 import com.paymentsplatform.paymentscore.internal.domain.exceptions.InvalidStateTransitionException;
 import com.paymentsplatform.paymentscore.internal.domain.exceptions.PaymentNotFoundException;
+import com.paymentsplatform.paymentscore.internal.infrastructure.NoopPaymentEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,7 @@ class CancelPaymentUseCaseTest {
     @BeforeEach
     void setUp() {
         repo = new InMemoryPaymentRepository();
-        cancel = new CancelPaymentUseCase(repo);
+        cancel = new CancelPaymentUseCase(repo, new NoopPaymentEventPublisher());
     }
 
     @Test
@@ -44,7 +45,7 @@ class CancelPaymentUseCaseTest {
                 Money.of(new BigDecimal("100"), "INR"), "cancel-too-late-12345"
         );
         repo.save(intent);
-        new ProcessPaymentUseCase(repo).execute(intent.getId());
+        new ProcessPaymentUseCase(repo, new NoopPaymentEventPublisher()).execute(intent.getId());
 
         assertThrows(InvalidStateTransitionException.class, () -> cancel.execute(intent.getId()));
     }

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:22:06.571Z" hostname="JYOTIRS" time="0.189">
+<testsuite name="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-06-10T10:43:15.188Z" hostname="JYOTIRS" time="0.062">
   <properties/>
-  <testcase name="inr_twoSeparateRupeePaymentsHaveDistinctIds()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="cannotMarkSucceededFromCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.007"/>
-  <testcase name="cannotTransitionFromCanceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.005"/>
-  <testcase name="cannotStartProcessingAgainFromProcessing()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
-  <testcase name="cannotTransitionFromSucceeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.009"/>
-  <testcase name="inr_createsPaymentIntentWithRupeeAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.009"/>
-  <testcase name="inr_highValuePayment_succeeds()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="inr_happyPath_created_canceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.004"/>
-  <testcase name="intentIsEqualToItself()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="cannotMarkFailedFromCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
+  <testcase name="inr_twoSeparateRupeePaymentsHaveDistinctIds()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="cannotMarkSucceededFromCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="cannotTransitionFromCanceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
+  <testcase name="cannotStartProcessingAgainFromProcessing()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="cannotTransitionFromSucceeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="inr_createsPaymentIntentWithRupeeAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="inr_highValuePayment_succeeds()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="inr_happyPath_created_canceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="intentIsEqualToItself()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="cannotMarkFailedFromCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
   <testcase name="inr_happyPath_created_processing_succeeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
-  <testcase name="twoDistinctIntentsAreNotEqual()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.004"/>
-  <testcase name="happyPath_created_processing_failed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
+  <testcase name="twoDistinctIntentsAreNotEqual()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="happyPath_created_processing_failed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
   <testcase name="updatedAtIsRefreshedAfterEachTransition()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.015"/>
-  <testcase name="invalidTransitionExceptionCarriesPaymentIdFromAndTo()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.004"/>
-  <testcase name="happyPath_created_processing_succeeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="inr_happyPath_created_processing_failed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
-  <testcase name="createThrowsOnNullIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="createAssignsNonNullId()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="happyPath_created_canceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="createPreservesAmountAndIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="cannotTransitionFromFailed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.012"/>
-  <testcase name="createSetsInitialStateToCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="eachCreatedIntentHasAUniqueId()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="cannotCancelFromProcessing()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.004"/>
-  <testcase name="createThrowsOnNullAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
-  <testcase name="createThrowsOnBlankIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
-  <testcase name="createSetsCreatedAtAndUpdatedAt()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.003"/>
-  <testcase name="inr_paymentAmountIsPreservedThroughLifecycle()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.002"/>
-  <testcase name="toStringContainsIdStatusAndAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.014"/>
+  <testcase name="invalidTransitionExceptionCarriesPaymentIdFromAndTo()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="happyPath_created_processing_succeeded()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="inr_happyPath_created_processing_failed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="createThrowsOnNullIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="createAssignsNonNullId()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="happyPath_created_canceled()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="createPreservesAmountAndIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="cannotTransitionFromFailed()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="createSetsInitialStateToCreated()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="eachCreatedIntentHasAUniqueId()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="cannotCancelFromProcessing()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="createThrowsOnNullAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="createThrowsOnBlankIdempotencyKey()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.001"/>
+  <testcase name="createSetsCreatedAtAndUpdatedAt()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="inr_paymentAmountIsPreservedThroughLifecycle()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.0"/>
+  <testcase name="toStringContainsIdStatusAndAmount()" classname="com.paymentsplatform.paymentscore.domain.PaymentIntentTest" time="0.007"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

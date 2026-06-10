@@ -3,6 +3,7 @@ package com.paymentsplatform.paymentscore.application;
 import com.paymentsplatform.paymentscore.internal.application.CreatePaymentUseCase;
 import com.paymentsplatform.paymentscore.internal.domain.PaymentStatus;
 import com.paymentsplatform.paymentscore.internal.domain.exceptions.InvalidMoneyException;
+import com.paymentsplatform.paymentscore.internal.infrastructure.NoopPaymentEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class CreatePaymentUseCaseTest {
     void setUp() {
         repo = new InMemoryPaymentRepository();
         store = new InMemoryIdempotencyStore();
-        useCase = new CreatePaymentUseCase(repo, store);
+        useCase = new CreatePaymentUseCase(repo, store, new NoopPaymentEventPublisher());
     }
 
     @Test
