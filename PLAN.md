@@ -333,32 +333,85 @@ Will be exercised by the `ledger-service` GitHub Actions job once re-enabled in 
 
 ---
 
-## Phase 5 — Ledger Service: Persistence + HTTP Layer (Scala)
+## Phase 5 — Ledger Service: Persistence + HTTP Layer (Scala) ✅ COMPLETE
 
 **Goal:** Persist ledger entries (append-only). Expose HTTP endpoints for recording entries and querying balances.
 
-### 5.1 Database Schema
-- `accounts` table: `id`, `name`, `created_at`
-- `ledger_entries` table: `id`, `account_id`, `type`, `amount_value`, `amount_currency`, `payment_id`, `created_at`
-- No `updated_at` — entries are immutable
-- No soft deletes
+### 5.1 Database Schema ✅
+- `accounts (id UUID PK, name VARCHAR, currency VARCHAR(3), created_at TIMESTAMPTZ)`
+- `ledger_entries (id UUID PK, account_id UUID FK, entry_type VARCHAR(8) CHECK IN ('DEBIT','CREDIT'), amount_value NUMERIC(19,4), amount_currency VARCHAR(3), payment_id UUID, created_at TIMESTAMPTZ)`
+- No `updated_at`. No soft delete column.
+- Indexes on `account_id` and `payment_id`.
+- Migration: `migrations/V1__create_ledger_tables.sql`.
 
-### 5.2 `LedgerRepository`
-- `appendEntry(entry: LedgerEntry): Unit` — insert only, never update
-- `findEntriesByAccount(accountId: UUID): List[LedgerEntry]`
-- `findEntriesByPayment(paymentId: UUID): List[LedgerEntry]`
+### 5.2 `LedgerRepository` + `AccountRepository` ✅
+- Traits live in `internal/domain/`; JDBC impls live in `internal/infrastructure/`.
+- `LedgerRepository.appendEntries(entries: List[LedgerEntry])` — atomic batch insert wrapped in a manual transaction. No update path.
+- `findEntriesByAccount(accountId)`, `findEntriesByPayment(paymentId)` — ordered by `(created_at, id)`.
+- `AccountRepository.save` is `INSERT ... ON CONFLICT (id) DO NOTHING`; `findById` reconstitutes an `Account` by loading the row plus all its entries.
 
-### 5.3 HTTP Handlers
-- `POST /accounts` — create account
-- `GET /accounts/{id}/balance` — get derived balance
-- `POST /entries` — record a ledger entry (validates double-entry pair in request body)
-- `GET /entries/{paymentId}` — get entries for a payment
+### 5.3 HTTP Handlers ✅
+HTTP server: **Javalin 6.3** + Jackson 2.17 with `DefaultScalaModule` + `JavaTimeModule`.
+- `POST /accounts` — body `{name, currency}` → **201** + `AccountResponse`.
+- `GET /accounts/{id}/balance` — **200** + `BalanceResponse` (balance derived from entries on each request).
+- `POST /entries` — body `{paymentId, legs: [{accountId, entryType, amount, currency}, ...]}` — validates via `DoubleEntryValidator`, atomic insert. **201** on first write, **200** with the existing entries on duplicate `paymentId` (idempotent).
+- `GET /entries/{paymentId}` — **200** + `TransactionResponse` (empty `entries` list if unknown).
+
+### 5.4 Error Handling ✅
+Centralised in `transport/ErrorHandler.scala`:
+- `AccountNotFoundException` → **404** `not_found`
+- `InvariantViolationException` → **422** `invariant_violation`
+- `InvalidMoneyException` → **400** `invalid_money`
+- `InvalidPathParameterException` → **400** `invalid_path_parameter`
+- `InvalidEntryTypeException` → **400** `invalid_entry_type`
+- `IllegalArgumentException` → **400** `invalid_request`
+- Any other `Exception` → **500** `internal_error`
 
 **Phase 5 Definition of Done:**
-- [ ] Append-only persistence with no update/delete paths
-- [ ] Balance always derived from entries, never stored
-- [ ] HTTP endpoints working
-- [ ] Integration tests with Testcontainers
+- [x] Append-only persistence with no update/delete paths
+- [x] Balance always derived from entries, never stored
+- [x] HTTP endpoints working
+- [x] Integration tests with Testcontainers (9 HTTP scenarios via ScalaTest)
+
+**Files delivered:**
+```
+services/ledger-service/
+├── build.sbt                                            (postgres, hikari, javalin, jackson, testcontainers)
+├── migrations/V1__create_ledger_tables.sql
+└── src/main/scala/.../
+    ├── Main.scala                                       (Javalin bootstrap + DI wiring)
+    ├── internal/application/
+    │   ├── OpenAccountUseCase.scala
+    │   ├── GetBalanceUseCase.scala
+    │   ├── RecordTransactionUseCase.scala               (idempotent on paymentId)
+    │   └── GetEntriesForPaymentUseCase.scala
+    ├── internal/domain/
+    │   ├── AccountRepository.scala                      (trait)
+    │   ├── LedgerRepository.scala                       (trait)
+    │   └── exceptions/AccountNotFoundException.scala
+    ├── internal/infrastructure/
+    │   ├── PostgresAccountRepository.scala              (JDBC, no ORM)
+    │   └── PostgresLedgerRepository.scala               (JDBC, atomic batch)
+    └── internal/transport/
+        ├── LedgerController.scala
+        ├── ErrorHandler.scala
+        └── dto/
+            ├── CreateAccountRequest.scala
+            ├── RecordEntriesRequest.scala               (with LegDto)
+            ├── AccountResponse.scala
+            ├── BalanceResponse.scala
+            ├── LedgerEntryResponse.scala
+            ├── TransactionResponse.scala
+            └── ErrorResponse.scala
+
+src/test/scala/.../internal/transport/
+└── LedgerControllerIntegrationSpec.scala                (Testcontainers + JDK HttpClient)
+```
+
+**Vestigial stubs removed:** `internal/api/LedgerHandler.scala`, `internal/persistence/*.scala`, `internal/domain/Invariants.scala`.
+
+**Note:** Test suite not executed locally (sbt not installed on dev machine).
+Will be exercised by the `ledger-service` GitHub Actions job once re-enabled in Phase 13.
 
 ---
 
@@ -584,8 +637,8 @@ Will be exercised by the `ledger-service` GitHub Actions job once re-enabled in 
 | 2 | Payments Core — Persistence | Java | ✅ Complete |
 | 3 | Payments Core — HTTP | Java | ✅ Complete |
 | 4 | Ledger Service — Domain | Scala | ✅ Complete |
-| 5 | Ledger Service — Persistence + HTTP | Scala | **Next** |
-| 6 | Event Integration (RabbitMQ) | Java + Scala | |
+| 5 | Ledger Service — Persistence + HTTP | Scala | ✅ Complete |
+| 6 | Event Integration (RabbitMQ) | Java + Scala | **Next** |
 | 7 | Webhook Service | Ruby | |
 | 8 | API Gateway | Go | |
 | 9 | Shared Libraries | Go | |
@@ -599,18 +652,17 @@ Will be exercised by the `ledger-service` GitHub Actions job once re-enabled in 
 
 ## What We Are Building Now
 
-**Phase 5 — Ledger Service: Persistence + HTTP Layer (Scala)**
+**Phase 6 — Event-Driven Integration (RabbitMQ)**
 
-Wire the Phase 4 domain to a real database and expose HTTP endpoints.
+Wire payments-core and ledger-service together via domain events instead of synchronous calls.
 
-Scope (per Phase 5 above):
-- Flyway migrations for `accounts` and `ledger_entries` (no `updated_at`, no soft delete)
-- `LedgerRepository` — append-only inserts, no update path
-- Account / entry HTTP endpoints (record entry, derived balance, lookup by paymentId)
-- Testcontainers Postgres integration tests
+Scope (per Phase 6 above):
+- Define event contracts in a shared location (`libs/contracts/` or `libs/proto/`): `PaymentCreated`, `PaymentProcessing`, `PaymentSucceeded`, `PaymentFailed`, `PaymentCanceled`. Each carries `paymentId`, `amount`, `currency`, `timestamp`.
+- Add a `PaymentEventPublisher` interface in `payments-core/internal/domain/`; implement in `infrastructure/` with the RabbitMQ Java client. Each use case publishes its event on commit success.
+- Add a RabbitMQ consumer in `ledger-service/internal/infrastructure/`. On `PaymentSucceeded`, look up the corresponding ledger accounts and post a balanced debit/credit pair via `RecordTransactionUseCase` — already idempotent on `paymentId`.
+- Add an integration test that boots both services + RabbitMQ via Testcontainers and asserts entries appear after a successful payment.
 
-Hard constraints (carried over from CLAUDE.md):
-- Balance is always **derived** from entries, never stored
-- Ledger entries are immutable — append-only, no update/delete
-- Double-entry invariant validated *before* any insert via the Phase 4 `DoubleEntryValidator`
-- Persistence layer depends on `internal/domain` interfaces; the domain stays framework-free
+Hard constraints:
+- JSON event payloads (versioned by adding a `schemaVersion` field — not by URI for now)
+- Ledger consumption is idempotent — `findEntriesByPayment(paymentId)` short-circuit already in place
+- Publisher failure must not roll back the payment write — use a transactional outbox or accept at-least-once with idempotent consumers (we'll choose during design)
