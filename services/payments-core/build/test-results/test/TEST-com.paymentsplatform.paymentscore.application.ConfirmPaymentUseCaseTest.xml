@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:22:06.309Z" hostname="JYOTIRS" time="0.025">
+<testsuite name="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-06-10T10:43:15.092Z" hostname="JYOTIRS" time="0.011">
   <properties/>
   <testcase name="confirm_failed_movesToFailed()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.004"/>
-  <testcase name="confirm_nullOutcome_throwsIllegalArgument()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.003"/>
-  <testcase name="confirm_unknownId_throwsNotFound()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.002"/>
-  <testcase name="confirm_fromCreated_throwsInvalidStateTransition()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.003"/>
-  <testcase name="confirm_succeeded_movesToSucceeded()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.004"/>
+  <testcase name="confirm_nullOutcome_throwsIllegalArgument()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.001"/>
+  <testcase name="confirm_unknownId_throwsNotFound()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.0"/>
+  <testcase name="confirm_fromCreated_throwsInvalidStateTransition()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.001"/>
+  <testcase name="confirm_succeeded_movesToSucceeded()" classname="com.paymentsplatform.paymentscore.application.ConfirmPaymentUseCaseTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

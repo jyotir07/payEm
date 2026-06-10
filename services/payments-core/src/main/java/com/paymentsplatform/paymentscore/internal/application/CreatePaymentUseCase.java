@@ -3,8 +3,10 @@ package com.paymentsplatform.paymentscore.internal.application;
 import com.paymentsplatform.paymentscore.internal.domain.IdempotencyKey;
 import com.paymentsplatform.paymentscore.internal.domain.IdempotencyStore;
 import com.paymentsplatform.paymentscore.internal.domain.Money;
+import com.paymentsplatform.paymentscore.internal.domain.PaymentEventPublisher;
 import com.paymentsplatform.paymentscore.internal.domain.PaymentIntent;
 import com.paymentsplatform.paymentscore.internal.domain.PaymentRepository;
+import com.paymentsplatform.paymentscore.internal.domain.events.PaymentEvent;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -15,15 +17,22 @@ import java.util.Optional;
  * Idempotency contract: if the supplied key already exists, the existing PaymentIntent is
  * returned and no new row is written. The result object distinguishes the two cases via
  * {@link Result#isNew()} so the transport layer can choose the correct HTTP status.
+ *
+ * On a fresh create, a PaymentCreated event is published after the DB commit.
+ * Idempotent replays do NOT republish — the event was emitted on the original create.
  */
 public class CreatePaymentUseCase {
 
     private final PaymentRepository paymentRepository;
     private final IdempotencyStore idempotencyStore;
+    private final PaymentEventPublisher eventPublisher;
 
-    public CreatePaymentUseCase(PaymentRepository paymentRepository, IdempotencyStore idempotencyStore) {
+    public CreatePaymentUseCase(PaymentRepository paymentRepository,
+                                IdempotencyStore idempotencyStore,
+                                PaymentEventPublisher eventPublisher) {
         this.paymentRepository = paymentRepository;
         this.idempotencyStore = idempotencyStore;
+        this.eventPublisher = eventPublisher;
     }
 
     public Result execute(BigDecimal amount, String currency, String idempotencyKey) {
@@ -40,6 +49,7 @@ public class CreatePaymentUseCase {
         PaymentIntent intent = PaymentIntent.create(money, key);
         paymentRepository.save(intent);
         idempotencyStore.save(key, intent.getId());
+        eventPublisher.publish(PaymentEvent.created(intent));
         return Result.created(intent);
     }
 

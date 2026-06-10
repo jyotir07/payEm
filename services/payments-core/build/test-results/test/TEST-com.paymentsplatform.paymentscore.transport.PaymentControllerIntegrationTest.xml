@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-05-19T17:21:58.735Z" hostname="JYOTIRS" time="6.828">
+<testsuite name="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-06-10T10:43:17.250Z" hostname="JYOTIRS" time="0.036">
   <properties/>
-  <testcase name="get_unknownId_returns404()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.616"/>
-  <testcase name="confirm_fromCreated_returns422()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.189"/>
-  <testcase name="process_alreadyTerminal_returns422()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.057"/>
-  <testcase name="create_negativeAmount_returns400()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.011"/>
-  <testcase name="get_malformedUuid_returns400()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.006"/>
-  <testcase name="fullLifecycle_createProcessSucceed()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.038"/>
-  <testcase name="confirm_unknownOutcome_returns400()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.038"/>
-  <testcase name="create_duplicateIdempotencyKey_returnsExisting()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.03"/>
-  <testcase name="cancel_afterProcessing_returns422()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.038"/>
-  <testcase name="cancel_fromCreated_succeeds()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.031"/>
-  <testcase name="create_invalidCurrency_returns400()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.009"/>
-  <testcase name="create_missingIdempotencyKeyHeader_returns400()" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.006"/>
+  <testcase name="initializationError" classname="com.paymentsplatform.paymentscore.transport.PaymentControllerIntegrationTest" time="0.0">
+    <failure message="java.nio.file.InvalidPathException: Illegal char &lt;?&gt; at index 0: ?]633" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;?&gt; at index 0: ?]633
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:232)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at org.testcontainers.utility.CommandLine.executableExists(CommandLine.java:59)
+	at org.testcontainers.utility.DockerMachineClient.isInstalled(DockerMachineClient.java:50)
+	at org.testcontainers.dockerclient.DockerMachineClientProviderStrategy.isApplicable(DockerMachineClientProviderStrategy.java:62)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:178)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1602)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:129)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:150)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:647)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:267)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:152)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:194)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:106)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:109)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:329)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension$StoreAdapter.start(TestcontainersExtension.java:280)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension$StoreAdapter.access$200(TestcontainersExtension.java:267)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension.lambda$null$4(TestcontainersExtension.java:82)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension.lambda$startContainers$5(TestcontainersExtension.java:82)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension.startContainers(TestcontainersExtension.java:82)
+	at org.testcontainers.junit.jupiter.TestcontainersExtension.beforeAll(TestcontainersExtension.java:56)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+</failure>
+  </testcase>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[[Test worker] INFO tc.postgres:16 - Creating container for image: postgres:16
-[Test worker] INFO tc.postgres:16 - Container postgres:16 is starting: fe5f462c16b6b4d4b919174a482317ad4185f7d6ba92f311a9fc53b4b18b2704
-[Test worker] INFO tc.postgres:16 - Container postgres:16 started in PT2.9364871S
-[Test worker] INFO tc.postgres:16 - Container is started (JDBC URL: jdbc:postgresql://localhost:63462/payments_test?loggerLevel=OFF)
-[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
-[Test worker] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@27755487
-[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
-[Test worker] INFO io.javalin.Javalin - Starting Javalin ...
-[Test worker] INFO org.eclipse.jetty.server.Server - jetty-11.0.23; built: 2024-08-14T01:40:17.906Z; git: 6fcf5ccaebd7ca13a0cb96c96adca699a24080a0; jvm 17.0.10+7
-[Test worker] INFO org.eclipse.jetty.server.session.DefaultSessionIdManager - Session workerName=node0
-[Test worker] INFO org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@6b4fc2d1{/,null,AVAILABLE}
-[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@3b4825f0{HTTP/1.1, (http/1.1)}{0.0.0.0:63475}
-[Test worker] INFO org.eclipse.jetty.server.Server - Started Server@45545e7a{STARTING}[11.0.23,sto=0] @20166ms
-[Test worker] INFO io.javalin.Javalin - 
-       __                  ___           _____
-      / /___ __   ______ _/ (_)___      / ___/
- __  / / __ `/ | / / __ `/ / / __ \    / __ \
-/ /_/ / /_/ /| |/ / /_/ / / / / / /   / /_/ /
-\____/\__,_/ |___/\__,_/_/_/_/ /_/    \____/
-
-       https://javalin.io/documentation
-
-[Test worker] INFO io.javalin.Javalin - Javalin started in 644ms \o/
-[Test worker] INFO io.javalin.Javalin - Listening on http://localhost:63475/
-[Test worker] INFO io.javalin.Javalin - You are running Javalin 6.3.0 (released August 22, 2024. Your Javalin version is 635 days old. Consider checking for a newer version.).
-[Test worker] INFO io.javalin.Javalin - Stopping Javalin ...
-[Test worker] INFO org.eclipse.jetty.server.Server - Stopped Server@45545e7a{STOPPING}[11.0.23,sto=0]
-[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Stopped ServerConnector@3b4825f0{HTTP/1.1, (http/1.1)}{0.0.0.0:0}
-[Test worker] INFO org.eclipse.jetty.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@6b4fc2d1{/,null,STOPPED}
-[Test worker] INFO io.javalin.Javalin - Javalin has stopped
+  <system-err><![CDATA[[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
 ]]></system-err>
 </testsuite>

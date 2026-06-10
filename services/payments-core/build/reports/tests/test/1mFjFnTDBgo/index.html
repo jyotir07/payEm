@@ -17,7 +17,7 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a class="successGroup" href="#">Gradle Test Run :test</a>
+<a class="failureGroup" href="#">Gradle Test Run :test</a>
 </li>
 </ul>
 <div class="tab">
@@ -44,13 +44,13 @@
 <tr>
 <td>
 <div class="infoBox">
-<div class="counter">8</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox">
-<div class="counter">0</div>
+<div class="counter">1</div>
 <p>failures</p>
 </div>
 </td>
@@ -62,7 +62,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">12.548s</div>
+<div class="counter">0.037s</div>
 <p>duration</p>
 </div>
 </td>
@@ -71,14 +71,25 @@
 </div>
 </td>
 <td>
-<div class="infoBox success successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures successRate">
+<div class="percent">0%</div>
 <p>successful</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">Failed</a>
+</li>
+<li>
+<a class="" href="#">All</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Failed</h2>
 <table class="test-results">
 <thead>
 <tr>
@@ -92,107 +103,52 @@
 </tr>
 </thead>
 <tr>
-<td class="success">findById_returnsEmpty_forUnknownId()</td>
-<td class="path" hidden="">findById_returnsEmpty_forUnknownId()</td>
+<td class="failures">
+<a href="0H3To-XdI6U.html">initializationError</a>
+</td>
+<td class="path" hidden="">initializationError</td>
+<td>1</td>
 <td>1</td>
 <td>0</td>
-<td>0</td>
-<td>0.009s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">findByIdempotencyKey_returnsEmpty_forUnknownKey()</td>
-<td class="path" hidden="">findByIdempotencyKey_returnsEmpty_forUnknownKey()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.015s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">idempotencyStore_existsReturnsFalse_beforeSave()</td>
-<td class="path" hidden="">idempotencyStore_existsReturnsFalse_beforeSave()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.009s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">idempotencyStore_existsReturnsTrue_afterRepositorySave()</td>
-<td class="path" hidden="">idempotencyStore_existsReturnsTrue_afterRepositorySave()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.020s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">save_persists_fullLifecycle_INR()</td>
-<td class="path" hidden="">save_persists_fullLifecycle_INR()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.034s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">save_updatesStatusOnTransition()</td>
-<td class="path" hidden="">save_updatesStatusOnTransition()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.219s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">saveAndFindById_roundTrip()</td>
-<td class="path" hidden="">saveAndFindById_roundTrip()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.016s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">saveAndFindByIdempotencyKey_roundTrip()</td>
-<td class="path" hidden="">saveAndFindByIdempotencyKey_roundTrip()</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.012s</td>
-<td class="success">100%</td>
+<td>0.001s</td>
+<td class="failures">0%</td>
 </tr>
 </table>
+</div>
+<div class="tab">
+<h2>All</h2>
+<table class="test-results">
+<thead>
+<tr>
+<th>Child</th>
+<th hidden="">Name</th>
+<th>Tests</th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Duration</th>
+<th>Success rate</th>
+</tr>
+</thead>
+<tr>
+<td class="failures">
+<a href="0H3To-XdI6U.html">initializationError</a>
+</td>
+<td class="path" hidden="">initializationError</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="failures">0%</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="tab">
 <h2>error output</h2>
 <span class="code">
-<pre id="root-0-test-stderr-com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest">[Test worker] INFO org.testcontainers.images.PullPolicy - Image pull policy will be performed by: DefaultPullPolicy()
-[Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor - Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
-[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
-[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
-[Test worker] INFO org.testcontainers.DockerClientFactory - Docker host IP address is localhost
-[Test worker] INFO org.testcontainers.DockerClientFactory - Connected to docker: 
-  Server Version: 28.0.4
-  API Version: 1.48
-  Operating System: Docker Desktop
-  Total Memory: 3724 MB
-[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Creating container for image: testcontainers/ryuk:0.7.0
-[Test worker] INFO org.testcontainers.utility.RegistryAuthLocator - Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
-[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Container testcontainers/ryuk:0.7.0 is starting: 62a00fd189421b0062c8916c362cb81070fec52a689e45dbcd54d3daeaa6e934
-[Test worker] INFO tc.testcontainers/ryuk:0.7.0 - Container testcontainers/ryuk:0.7.0 started in PT3.4089392S
-[Test worker] INFO org.testcontainers.utility.RyukResourceReaper - Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
-[Test worker] INFO org.testcontainers.DockerClientFactory - Checking the system...
-[Test worker] INFO org.testcontainers.DockerClientFactory - ?? Docker server version should be at least 1.6.0
-[Test worker] INFO tc.postgres:16 - Creating container for image: postgres:16
-[Test worker] INFO tc.postgres:16 - Container postgres:16 is starting: 6a229e2fa0ab0c5a112dabed4f47f1c24039fe29f3b6712475aaeeeaa69d1b3d
-[Test worker] INFO tc.postgres:16 - Container postgres:16 started in PT4.6179912S
-[Test worker] INFO tc.postgres:16 - Container is started (JDBC URL: jdbc:postgresql://localhost:63445/payments_test?loggerLevel=OFF)
-[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-[Test worker] INFO com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e84111a
-[Test worker] INFO com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+<pre id="root-0-test-stderr-com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest">[Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy - Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
 </pre>
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-com.paymentsplatform.paymentscore.infrastructure.PaymentRepositoryIntegrationTest">Copy</button>
 </span>
@@ -207,7 +163,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.5.1</a> at 19-May-2026, 10:52:07 pm</p>
+<a href="https://www.gradle.org">Gradle 9.5.1</a> at 10-Jun-2026, 4:13:18 pm</p>
 </div>
 </div>
 </body>
