@@ -6,7 +6,7 @@ version := "1.0.0"
 scalaVersion := "2.13.12"
 
 libraryDependencies ++= Seq(
-  // HTTP, DB, and runtime deps
+  "org.scalatest" %% "scalatest" % "3.2.18" % Test
 )
 
 enablePlugins(JavaAppPackaging)
