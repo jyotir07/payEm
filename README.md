@@ -1,4 +1,4 @@
-# payments-platform
+# pay 'em
 
 Production-grade monorepo for a distributed payments platform.
 
